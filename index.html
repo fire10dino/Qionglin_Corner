@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qionglin 芎林 — an old Hakka township</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --paper:#FBF6EA;
+    --paper-soft:#FEFCF6;
+    --ink:#463521;
+    --ink-soft:#7A6650;
+    --indigo:#42586B;
+    --brick:#96502F;
+    --gold:#B9812A;
+    --moss:#5E6A46;
+    --line: rgba(70,53,33,0.16);
+    --line-strong: rgba(70,53,33,0.32);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:5;
+    opacity:.5;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1,h2,h3{
+    font-family:'Cormorant Garamond','Times New Roman',serif;
+    font-weight:600;
+    letter-spacing:.01em;
+    margin:0;
+  }
+  .gloss{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:400;
+    font-style:normal;
+    color:var(--ink-soft);
+    font-size:.82em;
+  }
+
+  a, button{ font-family:inherit; color:inherit; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    position:fixed; top:0; left:0; right:0;
+    z-index:40;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.1rem clamp(1.2rem,4vw,3rem);
+    background:linear-gradient(to bottom, var(--paper) 78%, transparent);
+  }
+  .topbar__mark{
+    background:none; border:none; cursor:pointer;
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.5rem; font-weight:600; letter-spacing:.03em;
+    color:var(--ink);
+    display:flex; align-items:baseline; gap:.5rem;
+  }
+  .topbar__mark .gloss{ font-size:.95rem; }
+
+  /* ---------- burger button ---------- */
+  .burger{
+    width:30px; height:22px;
+    position:relative;
+    background:none; border:none; cursor:pointer;
+    padding:0;
+  }
+  .burger span{
+    position:absolute; left:0; right:0;
+    height:2px; border-radius:2px;
+    background:var(--ink);
+    transition:transform .3s ease, opacity .2s ease, top .3s ease;
+  }
+  .burger span:nth-child(1){ top:1px; }
+  .burger span:nth-child(2){ top:10px; }
+  .burger span:nth-child(3){ top:19px; }
+  .burger.open span:nth-child(1){ top:10px; transform:rotate(45deg); }
+  .burger.open span:nth-child(2){ opacity:0; }
+  .burger.open span:nth-child(3){ top:10px; transform:rotate(-45deg); }
+
+  /* ---------- menu overlay (dark, oxidized-paper scrim) ---------- */
+  .menu-overlay{
+    position:fixed; inset:0;
+    z-index:34;
+    background-color: rgba(61,44,25,0.94);
+    background-image: repeating-linear-gradient(180deg, rgba(255,241,214,0.05) 0px, rgba(255,241,214,0.05) 1px, transparent 1px, transparent 5px);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s ease;
+  }
+  .menu-overlay.open{ opacity:1; pointer-events:auto; }
+
+  /* ---------- scroll menu (no box — plain words over the scrim) ---------- */
+  .scroll-menu{
+    position:fixed; top:50%; left:50%;
+    transform:translate(-50%,-46%);
+    z-index:36;
+    width:min(88vw, 420px);
+    max-height:80vh;
+    overflow:auto;
+    background:none;
+    border:none;
+    box-shadow:none;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  .scroll-menu.open{ opacity:1; pointer-events:auto; transform:translate(-50%,-50%); }
+  .scroll-menu ul{
+    list-style:none; margin:0; padding:0;
+  }
+  .scroll-menu li{ border:none; }
+  .scroll-menu button{
+    display:flex; align-items:baseline; justify-content:center; gap:.7rem;
+    width:100%; text-align:center;
+    background:none; border:none; outline:none; box-shadow:none; cursor:pointer;
+    padding:1.05rem .2rem;
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.6rem; font-weight:600;
+    color:#F3E8D2;
+    transition:color .2s;
+  }
+  .scroll-menu button:hover, .scroll-menu button.current{ color:#E9BE72; }
+  .scroll-menu button:focus-visible{ color:#E9BE72; outline:none; }
+  .scroll-menu button .gloss{ font-size:.85rem; color:rgba(243,232,210,0.6); }
+
+
+  /* ---------- page switching ---------- */
+  .page{ display:none; }
+  .page.active{ display:block; animation:rise .6s ease both; }
+  @media (prefers-reduced-motion:reduce){ .page.active{ animation:none; } }
+  @keyframes rise{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+
+  main{ position:relative; z-index:1; }
+
+  /* ---------- hero / cover ---------- */
+  .hero{
+    min-height:62vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:8.5rem clamp(1.4rem,6vw,5rem) 3.5rem;
+    position:relative;
+  }
+  .hero__ridge{
+    position:absolute; left:0; right:0; bottom:0;
+    width:100%; height:auto;
+    z-index:0;
+  }
+  .hero__inner{ position:relative; z-index:1; max-width:920px; }
+  .hero__title-row{
+    display:flex; align-items:flex-end; flex-wrap:wrap;
+    gap:clamp(1rem,3vw,1.8rem);
+  }
+  .hero__cn{
+    font-family:'Noto Serif TC','Songti TC','PMingLiU',serif;
+    font-weight:900;
+    font-size:clamp(1.8rem, 5.8vw, 3.3rem);
+    line-height:1;
+    letter-spacing:.02em;
+    margin:0;
+    color:var(--ink);
+  }
+  .hero__side{
+    border-left:1px solid var(--line-strong);
+    padding-left:1.2rem;
+    padding-bottom:.15rem;
+    max-width:17rem;
+  }
+  .hero__side p{ margin:0; }
+  .side-primary{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:1.35rem;
+    color:var(--brick);
+    line-height:1.3;
+  }
+  .side-secondary{ margin-top:.35rem !important; }
+
+  .hero__overview{
+    margin-top:2.6rem;
+    max-width:36rem;
+    padding-top:2rem;
+    border-top:1px solid var(--line);
+  }
+  .hero__overview h2{
+    font-size:1.4rem;
+    display:flex; align-items:baseline; gap:.6rem;
+    margin-bottom:.7rem;
+  }
+  .hero__overview p{
+    margin:0;
+    font-size:1.08rem;
+    color:var(--ink-soft);
+  }
+
+  .hero__stamps{
+    display:flex; flex-wrap:wrap; gap:1.6rem;
+    margin-top:2.8rem;
+  }
+  .stamp{
+    background:var(--paper-soft);
+    border:1px solid var(--line-strong);
+    border-radius:2px;
+    padding:1.35rem 2rem 1.2rem;
+    cursor:pointer;
+    text-align:left;
+    box-shadow:2px 3px 0 rgba(70,53,33,.10);
+    transition:transform .2s, box-shadow .2s;
+    position:relative;
+  }
+  .stamp:nth-child(1){ transform:rotate(-1.2deg); }
+  .stamp:nth-child(2){ transform:rotate(0.6deg); }
+  .stamp:nth-child(3){ transform:rotate(-0.4deg); }
+  .stamp:hover{ transform:translateY(-3px) rotate(0deg); box-shadow:3px 7px 0 rgba(70,53,33,.14); }
+  .stamp__primary{
+    display:block;
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:1.3rem;
+  }
+  .stamp__secondary{ display:block; margin-top:.3rem; font-size:.86rem; }
+
+  /* ---------- generic page hero ---------- */
+  .page-hero{
+    padding:8.5rem clamp(1.4rem,6vw,5rem) 2.5rem;
+    max-width:960px;
+  }
+  .page-hero__icon{ width:56px; height:auto; margin-bottom:1rem; }
+  .page-hero h1{
+    font-size:clamp(2.2rem,5.5vw,3.2rem);
+    display:flex; flex-direction:column; gap:.3rem;
+  }
+  .page-hero h1 .gloss{ font-size:1.05rem; }
+  .page-hero__intro{
+    margin-top:1.4rem;
+    max-width:40rem;
+    font-size:1.08rem;
+    color:var(--ink-soft);
+  }
+
+  section.body-section{
+    padding:0 clamp(1.4rem,6vw,5rem) 5rem;
+    max-width:1080px;
+  }
+
+  /* ---------- article box: centered content ---------- */
+  .article-wrap{
+    max-width:800px;
+    margin:0 auto;
+    padding:0 clamp(1.4rem,5vw,3rem) 5rem;
+  }
+  .article-box{
+    background:var(--paper-soft);
+    border:1px solid var(--line);
+    padding:clamp(1.6rem,4vw,3rem);
+  }
+
+  /* ---------- image placeholder box ---------- */
+  .image-slot{
+    min-height:190px;
+    border:1px solid var(--line-strong);
+    background:var(--paper);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:1rem;
+    color:var(--ink-soft);
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:1rem;
+  }
+  .image-slot .gloss{ display:block; font-style:normal; margin-top:.3rem; }
+
+  /* ---------- image set beside a bit of text, alternating sides ---------- */
+  .text-image{
+    display:grid;
+    grid-template-columns:1fr 220px;
+    gap:1.8rem;
+    align-items:center;
+    margin:2.4rem 0;
+  }
+  .text-image--left{ grid-template-columns:220px 1fr; }
+  .text-image--left .image-slot{ order:-1; }
+  .text-image p{
+    margin:0;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:1.2rem;
+    color:var(--ink-soft);
+  }
+  @media (max-width:640px){
+    .text-image, .text-image--left{ grid-template-columns:1fr; }
+    .text-image--left .image-slot{ order:0; }
+  }
+
+  /* ---------- timeline (history page) ---------- */
+  .timeline{ border-top:1px solid var(--line); }
+  .tl-item{
+    display:grid;
+    grid-template-columns:10rem 1fr;
+    gap:2rem;
+    padding:2.4rem 0;
+    border-bottom:1px solid var(--line);
+  }
+  .tl-year{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:1.3rem;
+    color:var(--brick);
+    padding-top:.15rem;
+  }
+  .tl-year .gloss{ display:block; font-size:.8rem; margin-top:.2rem; }
+  .tl-body h3{ margin:0 0 .6rem; font-size:1.35rem; }
+  .tl-body h3 .gloss{ margin-left:.4rem; }
+  .tl-body p{ margin:0; max-width:38rem; color:var(--ink-soft); }
+
+  /* ---------- prose block ---------- */
+  .prose-block{ max-width:42rem; margin-bottom:3rem; }
+  .prose-block p{ color:var(--ink-soft); }
+  .prose-block p + p{ margin-top:1rem; }
+
+  /* ---------- gallery ---------- */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:1.8rem;
+    margin:2rem 0 3.5rem;
+  }
+  .gallery-card{
+    background:var(--paper-soft);
+    border:1px solid var(--line);
+    padding:1.6rem 1.4rem 1.4rem;
+    position:relative;
+  }
+  .gallery-card:nth-child(odd){ transform:rotate(-0.6deg); }
+  .gallery-card:nth-child(even){ transform:rotate(0.5deg); }
+  .gallery-card::before{
+    content:"";
+    position:absolute; top:-7px; left:50%; transform:translateX(-50%);
+    width:14px; height:14px; border-radius:50%;
+    background:var(--brick);
+    box-shadow:0 1px 2px rgba(0,0,0,.25);
+  }
+  .gallery-card__icon{ width:64px; height:64px; margin-bottom:.9rem; color:var(--indigo); }
+  .gallery-card__icon.brick{ color:var(--brick); }
+  .gallery-card__icon.gold{ color:var(--gold); }
+  .gallery-card__icon.moss{ color:var(--moss); }
+  .gallery-card h3{ margin:0 0 .4rem; font-size:1.15rem; }
+  .gallery-card h3 .gloss{ margin-left:.35rem; }
+  .gallery-card p{ margin:0; font-size:.94rem; color:var(--ink-soft); }
+
+  /* ---------- video frame ---------- */
+  .video-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    gap:2rem;
+    margin:2rem 0 3rem;
+  }
+  .video-frame{
+    border:1px solid var(--line-strong);
+    background:var(--paper-soft);
+    padding:1.4rem;
+  }
+  .video-frame__screen{
+    aspect-ratio:16/9;
+    background:linear-gradient(160deg, var(--indigo), var(--ink));
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .video-frame__play{
+    width:56px; height:56px;
+    border-radius:50%;
+    background:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.25);
+  }
+  .video-frame__play svg{ width:18px; height:18px; color:var(--indigo); margin-left:3px; }
+  .video-frame figcaption{ margin-top:.9rem; display:flex; flex-direction:column; gap:.3rem; }
+  .video-frame__title{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.1rem; }
+  .video-frame__title .gloss{ margin-left:.4rem; }
+  .video-frame__note{ font-size:.88rem; color:var(--ink-soft); }
+
+  /* ---------- feature grid ---------- */
+  .feature-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:2.6rem 2.2rem;
+    margin-bottom:3rem;
+  }
+  .feature h3{ margin:0 0 .6rem; font-size:1.25rem; border-bottom:1px solid var(--line); padding-bottom:.5rem; }
+  .feature h3 .gloss{ margin-left:.35rem; }
+  .feature p{ margin:0; color:var(--ink-soft); }
+
+  /* ---------- credits / sources list ---------- */
+  .credits-list{ list-style:none; margin:1.6rem 0 0; padding:0; }
+  .credits-list li{ padding:1.1rem 0; border-bottom:1px solid var(--line); }
+  .credits-list li:first-child{ border-top:1px solid var(--line); }
+  .credits-list__name{ display:block; font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.2rem; }
+  .credits-list__note{ display:block; margin-top:.25rem; font-size:.94rem; color:var(--ink-soft); }
+
+  footer{
+    padding:3rem clamp(1.4rem,6vw,5rem) 4rem;
+    border-top:1px solid var(--line);
+    color:var(--ink-soft);
+    font-size:1rem;
+  }
+  footer .gloss{ display:block; margin-top:.4rem; }
+
+  @media (max-width:640px){
+    .tl-item{ grid-template-columns:1fr; gap:.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <button class="topbar__mark" data-target="cover" aria-label="Back to the cover page">Qionglin<span class="gloss" lang="zh-Hant">芎林</span></button>
+  <button class="burger" id="burgerBtn" aria-expanded="false" aria-controls="scrollMenu" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<nav class="scroll-menu" id="scrollMenu" aria-hidden="true">
+  <ul>
+    <li><button data-target="cover">Main Page<span class="gloss" lang="zh-Hant">首頁</span></button></li>
+    <li><button data-target="history">History<span class="gloss" lang="zh-Hant">歷史源流</span></button></li>
+    <li><button data-target="heritage">Secondary Forest<span class="gloss" lang="zh-Hant">老街古蹟</span></button></li>
+    <li><button data-target="videos">Videos<span class="gloss" lang="zh-Hant">影片</span></button></li>
+    <li><button data-target="credits">Sources &amp; Credits<span class="gloss" lang="zh-Hant">資料來源</span></button></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- ============ COVER ============ -->
+  <section id="cover" class="page active">
+    <div class="hero">
+      <svg class="hero__ridge" viewBox="0 0 1200 260" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,200 L90,140 L200,190 L330,80 L470,170 L610,60 Q670,35 750,105 L900,165 L1040,110 L1200,175 L1200,260 L0,260 Z" fill="var(--indigo)" opacity="0.10"/>
+        <path d="M0,235 L140,190 L280,225 L420,150 L580,215 L730,140 L880,205 L1040,160 L1200,215 L1200,260 L0,260 Z" fill="var(--brick)" opacity="0.08"/>
+      </svg>
+      <div class="hero__inner">
+        <div class="hero__title-row">
+          <h1 class="hero__cn" lang="zh-Hant">芎林</h1>
+          <div class="hero__side">
+            <p class="side-primary">an old Hakka township tucked into the Hsinchu hills</p>
+            <p class="side-secondary gloss" lang="zh-Hant">竹塹丘陵間的客家老庄</p>
+          </div>
+        </div>
+
+        <div class="hero__overview">
+          <h2>Overview<span class="gloss" lang="zh-Hant">總覽</span></h2>
+          <p>Qionglin is a small Hakka township in the hills of Hsinchu County, Taiwan, named after the groves of crape-myrtle trees that once lined its riverbanks. This site is a slow walk through that history — its old temple street, its founding families, its orchards, and the everyday life that still fills it today. Start wherever you like, and explore at your own pace.</p>
+        </div>
+
+        <div class="hero__stamps">
+          <button class="stamp" data-target="history">
+            <span class="stamp__primary">History &amp; Origins</span>
+            <span class="stamp__secondary gloss" lang="zh-Hant">歷史源流</span>
+          </button>
+          <button class="stamp" data-target="heritage">
+            <span class="stamp__primary">Secondary Forest</span>
+            <span class="stamp__secondary gloss" lang="zh-Hant">老街古蹟</span>
+          </button>
+          <button class="stamp" data-target="videos">
+            <span class="stamp__primary">Videos</span>
+            <span class="stamp__secondary gloss" lang="zh-Hant">影片</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HISTORY ============ -->
+  <section id="history" class="page">
+    <div class="page-hero">
+      <svg class="page-hero__icon" viewBox="0 0 120 90" aria-hidden="true" fill="none" stroke="var(--indigo)" stroke-width="3">
+        <path d="M10,70 Q30,20 40,55 Q50,10 60,55 Q70,15 80,60 Q95,25 108,70" stroke-linecap="round"/>
+        <circle cx="40" cy="40" r="3" fill="var(--indigo)" stroke="none"/>
+        <circle cx="60" cy="38" r="3" fill="var(--indigo)" stroke="none"/>
+        <circle cx="80" cy="42" r="3" fill="var(--indigo)" stroke="none"/>
+      </svg>
+      <h1>History &amp; Origins<span class="gloss" lang="zh-Hant">歷史源流</span></h1>
+      <p class="page-hero__intro">Before it became today's Qionglin, this valley was first a forest, then a settlers' word for that forest. Four chapters trace how the same stretch of land grew from woodland, to hamlet, to township.</p>
+    </div>
+    <div class="article-wrap">
+      <div class="article-box">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-year">Origins of the name<span class="gloss" lang="zh-Hant">名字的由來</span></div>
+          <div class="tl-body">
+            <h3>A forest of crape myrtle<span class="gloss" lang="zh-Hant">九芎成林</span></h3>
+            <p>The banks of the Youluo River were once covered in dense groves of jiu-qiong trees — a hardy, smooth-barked species suited to dry, windy ground. The earliest settlers named their settlement after it: Jiuqionglin, "the crape-myrtle forest." Over the generations the name was worn down to today's simpler Qionglin. Two centuries-old crape myrtle trees still stand at the gate of Wenlin Pavilion, planted so later generations would remember where the name came from.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">1775</div>
+          <div class="tl-body">
+            <h3>The settling of the land</h3>
+            <p>During the Qianlong era, Hakka pioneers from Chaozhou and Jiaying in Guangdong — among them the Jiang and Liu families — pushed inland along the Youluo River and began clearing farmland. Within a single generation, the settlement had grown large enough to need a guardian of its own.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-image text-image--right">
+        <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+        <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+        <p>The two crape myrtle trees still standing at the gate of Wenlin Pavilion — planted so the story behind Qionglin's name would never be forgotten.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-year">1800</div>
+          <div class="tl-body">
+            <h3>The Three Mountain Kings arrive<span class="gloss" lang="zh-Hant">廣福宮</span></h3>
+            <p>Local gentry raised funds for a temple to the Three Mountain Kings, a guardian deity carried over from their home villages in Guangdong, and named it Guangfu Temple. By the early 1800s, most of the flatland along the river had been turned into fields, and Jiuqionglin had become a busy waypoint between the coast and the mountain frontier.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">1876</div>
+          <div class="tl-body">
+            <h3>A town that valued learning<span class="gloss" lang="zh-Hant">文林閣</span></h3>
+            <p>In the 1870s, a local scholar founded a private study hall here, which by 1876 had grown into Wenlin Pavilion, a temple to the god of literature. At its height, the district is said to have supported twenty to thirty small schoolhouses — an unusually dense concentration of learning for a rural Hakka township. Wenlin Pavilion still quietly funds local schools today, more than a century after its first students arrived.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-image text-image--left">
+        <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+        <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+        <p>Twelve villages, one history — Qionglin today, still shaped by the families who first cleared this land.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-year">Today<span class="gloss" lang="zh-Hant">今日</span></div>
+          <div class="tl-body">
+            <h3>From hamlet to township</h3>
+            <p>Through Qing rule, Japanese colonial administration, and the postwar era, the settlement's boundaries shifted and its name was simplified, eventually settling into the twelve villages that make up Qionglin Township today. Home to roughly 20,000 people across 41 square kilometres, it remains overwhelmingly Hakka — more than 95 percent of the population — even as its southern edge grows into a quiet satellite community for workers commuting to the Hsinchu Science Park.</p>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECONDARY FOREST (old street / heritage) ============ -->
+  <section id="heritage" class="page">
+    <div class="page-hero">
+      <svg class="page-hero__icon" viewBox="0 0 120 90" aria-hidden="true" fill="none" stroke="var(--brick)" stroke-width="3">
+        <path d="M15,55 Q15,30 30,28 Q35,15 45,28 Q60,10 75,28 Q85,15 90,28 Q105,30 105,55" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="60" y1="28" x2="60" y2="55"/>
+        <line x1="10" y1="70" x2="110" y2="70"/>
+      </svg>
+      <h1>Secondary Forest<span class="gloss" lang="zh-Hant">老街古蹟</span></h1>
+      <p class="page-hero__intro">The old street beside Guangfu Temple is where Qionglin's history is easiest to picture. Its timber and brick shophouses are still standing, and a handful of the trades that once served the whole district haven't quite left.</p>
+    </div>
+    <div class="article-wrap">
+      <div class="article-box">
+      <div class="prose-block">
+        <p>Walk it slowly, and a blacksmith's forge, a tofu press, and a rice shop still open their doors along the lane. Follow it far enough, and the whole township's pace seems to slow down with you.</p>
+      </div>
+
+      <div class="text-image text-image--right">
+        <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+        <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+        <p>Timber and brick shophouses along the old street beside Guangfu Temple — a few of the trades here have never really closed.</p>
+      </div>
+
+      <div class="gallery">
+        <div class="gallery-card">
+          <svg class="gallery-card__icon brick" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="8" y="26" width="14" height="30"/><rect x="25" y="26" width="14" height="30"/><rect x="42" y="26" width="14" height="30"/>
+            <path d="M6,26 L15,14 L24,26 Z"/><path d="M23,26 L32,14 L41,26 Z"/><path d="M40,26 L49,14 L58,26 Z"/>
+          </svg>
+          <h3>Old Street<span class="gloss" lang="zh-Hant">老街</span></h3>
+          <p>Two-storey timber and brick shophouses, and a few old trades that never quite closed, line this quiet lane.</p>
+        </div>
+        <div class="gallery-card">
+          <svg class="gallery-card__icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M8,44 Q8,20 20,18 Q24,8 32,18 Q44,4 52,18 Q58,20 56,44" stroke-linejoin="round"/>
+            <line x1="32" y1="18" x2="32" y2="44"/><line x1="6" y1="52" x2="58" y2="52"/>
+          </svg>
+          <h3>Guangfu Temple<span class="gloss" lang="zh-Hant">廣福宮</span></h3>
+          <p>Built in 1800 and dedicated to the Three Mountain Kings, it remains the busiest temple in the township, drawing worshippers from seven villages.</p>
+        </div>
+        <div class="gallery-card">
+          <svg class="gallery-card__icon gold" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M10,44 Q10,22 22,20 Q26,10 32,20 Q44,6 54,20 Q58,22 54,44" stroke-linejoin="round"/>
+            <rect x="24" y="46" width="16" height="10" rx="1"/>
+            <line x1="24" y1="51" x2="40" y2="51"/>
+          </svg>
+          <h3>Wenlin Pavilion<span class="gloss" lang="zh-Hant">文林閣</span></h3>
+          <p>Founded in 1876 as a temple to the god of literature, it still funds local schools and welcomes students before exam season.</p>
+        </div>
+        <div class="gallery-card">
+          <svg class="gallery-card__icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M6,40 Q32,16 58,40" stroke-linecap="round"/>
+            <line x1="6" y1="40" x2="6" y2="50"/><line x1="58" y1="40" x2="58" y2="50"/>
+            <line x1="14" y1="40" x2="14" y2="48"/><line x1="24" y1="40" x2="24" y2="48"/>
+            <line x1="34" y1="40" x2="34" y2="48"/><line x1="44" y1="40" x2="44" y2="48"/>
+            <line x1="6" y1="50" x2="58" y2="50"/>
+          </svg>
+          <h3>Chenggan Bridge<span class="gloss" lang="zh-Hant">呈甘橋</span></h3>
+          <p>A wooden footbridge from 1818, rebuilt in stone in 1923. Its deck often doubles as a drying rack for pickled mustard greens.</p>
+        </div>
+        <div class="gallery-card">
+          <svg class="gallery-card__icon moss" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M4,46 L18,26 L28,38 L38,18 L50,34 L60,46 Z" stroke-linejoin="round"/>
+            <path d="M4,52 Q32,44 60,52" stroke-linecap="round"/>
+          </svg>
+          <h3>Feifeng Mountain &amp; the Youluo River<span class="gloss" lang="zh-Hant">飛鳳山．油羅溪</span></h3>
+          <p>The ridgeline gives the township its best-known view; the riverbed below is scattered with dark basalt and smooth, rounded stones.</p>
+        </div>
+      </div>
+
+      <div class="text-image text-image--left">
+        <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+        <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+        <p>Feifeng Mountain's ridgeline, seen from the old street — still the township's best-known view.</p>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VIDEOS ============ -->
+  <section id="videos" class="page">
+    <div class="page-hero">
+      <svg class="page-hero__icon" viewBox="0 0 120 90" aria-hidden="true" fill="none" stroke="var(--indigo)" stroke-width="3">
+        <rect x="12" y="18" width="96" height="54" rx="4"/>
+        <path d="M50,34 L74,45 L50,56 Z" fill="var(--indigo)" stroke="none"/>
+      </svg>
+      <h1>Videos<span class="gloss" lang="zh-Hant">影片</span></h1>
+      <p class="page-hero__intro">Short films from around the township — the old street, the temples, the orchards in season. This page will grow as new footage is added.</p>
+    </div>
+    <section class="body-section">
+      <div class="video-grid">
+        <figure class="video-frame">
+          <div class="video-frame__screen">
+            <div class="video-frame__play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6,4 L20,12 L6,20 Z"/></svg>
+            </div>
+          </div>
+          <figcaption>
+            <span class="video-frame__title">A walk down the old street<span class="gloss" lang="zh-Hant">老街漫步</span></span>
+            <span class="video-frame__note">Space reserved for your own footage.</span>
+          </figcaption>
+        </figure>
+        <figure class="video-frame">
+          <div class="video-frame__screen">
+            <div class="video-frame__play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6,4 L20,12 L6,20 Z"/></svg>
+            </div>
+          </div>
+          <figcaption>
+            <span class="video-frame__title">Qionglin through the seasons<span class="gloss" lang="zh-Hant">四季的芎林</span></span>
+            <span class="video-frame__note">Space reserved for your own footage.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  </section>
+
+  <!-- ============ CREDITS / SOURCES ============ -->
+  <section id="credits" class="page">
+    <div class="page-hero">
+      <svg class="page-hero__icon" viewBox="0 0 120 90" aria-hidden="true" fill="none" stroke="var(--gold)" stroke-width="3">
+        <path d="M25,15 L25,75 L95,75 L95,30 L80,15 Z" stroke-linejoin="round"/>
+        <path d="M80,15 L80,30 L95,30" stroke-linejoin="round"/>
+        <line x1="36" y1="40" x2="84" y2="40"/>
+        <line x1="36" y1="52" x2="84" y2="52"/>
+        <line x1="36" y1="64" x2="70" y2="64"/>
+      </svg>
+      <h1>Sources &amp; Credits<span class="gloss" lang="zh-Hant">資料來源</span></h1>
+      <p class="page-hero__intro">The references, sites, and people this project draws on — filled in as the research comes together.</p>
+    </div>
+    <div class="article-wrap">
+      <div class="article-box">
+        <ul class="credits-list">
+          <!-- SOURCE PLACEHOLDER — replace with your own citation -->
+          <li>
+            <span class="credits-list__name">Source name</span>
+            <span class="credits-list__note">What it was used for</span>
+          </li>
+          <!-- SOURCE PLACEHOLDER — replace with your own citation -->
+          <li>
+            <span class="credits-list__name">Source name</span>
+            <span class="credits-list__note">What it was used for</span>
+          </li>
+          <!-- SOURCE PLACEHOLDER — replace with your own citation -->
+          <li>
+            <span class="credits-list__name">Source name</span>
+            <span class="credits-list__note">What it was used for</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Qionglin, Hsinchu — a discovery project, always open to another story, another photo, another walk down the old street.
+  <span class="gloss" lang="zh-Hant">芎林．新竹 — 一個持續累積中的探索計畫。</span>
+</footer>
+
+<script>
+  var pages = document.querySelectorAll('.page');
+  var burgerBtn = document.getElementById('burgerBtn');
+  var scrollMenu = document.getElementById('scrollMenu');
+  var menuOverlay = document.getElementById('menuOverlay');
+
+  function setMenu(open){
+    scrollMenu.classList.toggle('open', open);
+    menuOverlay.classList.toggle('open', open);
+    burgerBtn.classList.toggle('open', open);
+    burgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    scrollMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+
+  function go(id){
+    pages.forEach(function(p){ p.classList.toggle('active', p.id === id); });
+    document.querySelectorAll('#scrollMenu button[data-target]').forEach(function(b){
+      b.classList.toggle('current', b.getAttribute('data-target') === id);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('[data-target]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      go(btn.getAttribute('data-target'));
+      setMenu(false);
+    });
+  });
+
+  burgerBtn.addEventListener('click', function(){
+    setMenu(!scrollMenu.classList.contains('open'));
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') setMenu(false);
+  });
+
+  document.addEventListener('click', function(e){
+    if(scrollMenu.classList.contains('open') && !scrollMenu.contains(e.target) && !burgerBtn.contains(e.target)){
+      setMenu(false);
+    }
+  });
+</script>
+
+</body>
+</html>
