@@ -413,6 +413,51 @@
   .feature h3 .gloss{ margin-left:.35rem; }
   .feature p{ margin:0; color:var(--ink-soft); }
 
+  /* ---------- sections inside article box (trails, wildlife) ---------- */
+  .section-head{ margin:3.2rem 0 1.2rem; padding-top:2.2rem; border-top:1px solid var(--line-strong); }
+  .section-head h2{ font-size:1.9rem; display:flex; align-items:baseline; gap:.7rem; margin-bottom:.6rem; }
+  .section-head h2 .gloss{ font-size:1rem; }
+  .section-head p{ margin:0; color:var(--ink-soft); max-width:38rem; }
+  .trail{ padding:1.6rem 0; border-bottom:1px solid var(--line); }
+  .trail:first-child{ border-top:1px solid var(--line); }
+  .trail h3{ font-size:1.35rem; margin-bottom:.5rem; }
+  .trail h3 .gloss{ margin-left:.4rem; }
+  .trail-stats{ display:flex; flex-wrap:wrap; gap:.5rem; margin:0 0 .8rem; }
+  .trail-stats span{
+    border:1px solid var(--line-strong);
+    background:var(--paper);
+    padding:.1rem .75rem;
+    font-size:.82rem;
+    color:var(--ink-soft);
+  }
+  .trail-stats span.hard{ color:var(--brick); border-color:var(--brick); }
+  .trail p{ margin:0; color:var(--ink-soft); }
+  .section-note{ margin:1.2rem 0 0; font-size:.88rem; color:var(--ink-soft); }
+  /* ---------- entries: photo on one side, text on the other, alternating ---------- */
+  .entry{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:1.8rem;
+    align-items:start;
+    padding:1.8rem 0;
+    border-bottom:1px solid var(--line);
+  }
+  .entry:nth-child(even){ grid-template-columns:1fr 220px; }
+  .entry:nth-child(even) .image-slot{ order:2; }
+  .entry .image-slot{ min-height:0; aspect-ratio:4/3; }
+  .entry img{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border:1px solid var(--line-strong); }
+  .entry:nth-child(even) img{ order:2; }
+  .trail-list .entry:first-child, .entry-list .entry:first-child{ border-top:1px solid var(--line); }
+  .species h3{ font-size:1.3rem; margin-bottom:.4rem; }
+  .species h3 .gloss{ margin-left:.4rem; }
+  .species p{ margin:0; color:var(--ink-soft); }
+  @media (max-width:640px){
+    .entry, .entry:nth-child(even){ grid-template-columns:1fr; }
+    .entry:nth-child(even) .image-slot{ order:0; }
+  }
+
+  .species .latin{ display:block; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:var(--ink-soft); margin:-.3rem 0 .5rem; }
+
   /* ---------- credits / sources list ---------- */
   .credits-list{ list-style:none; margin:1.6rem 0 0; padding:0; }
   .credits-list li{ padding:1.1rem 0; border-bottom:1px solid var(--line); }
@@ -838,6 +883,113 @@
         <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
         <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
         <p>Feifeng Mountain's ridgeline, seen from the old street — still the township's best-known view.</p>
+      </div>
+
+      <div class="section-head">
+        <h2>The Forest Trails<span class="gloss" lang="zh-Hant">步道</span></h2>
+        <p>Much of the woodland around Qionglin is secondary forest — trees that grew back after the original cover was cleared, which suits a township whose first settlers cleared this valley for farmland. Five trails, most of them around Feifeng Mountain, take you in.</p>
+      </div>
+
+      <div class="trail-list">
+        <article class="trail entry">
+          <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <div class="entry-body">
+          <h3>Feifeng Mountain Loop<span class="gloss" lang="zh-Hant">飛鳳山</span></h3>
+          <div class="trail-stats"><span>Moderate</span><span>5.8 km</span><span>2–2.5 hr</span></div>
+          <p>The easiest way to take in the whole mountain. The loop starts at Dai-Quan Temple, a richly decorated temple more than a century old, and a side path leads to a quiet Guanyin temple. Stone stairs alternate with dirt paths under the trees, and in spring the tung trees shed their white blossoms across the path. Viewpoints along the way open up over the surrounding valley.</p>
+          </div>
+        </article>
+        <article class="trail entry">
+          <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <div class="entry-body">
+          <h3>Feifeng Mountain</h3>
+          <div class="trail-stats"><span>Moderate</span><span>3.4 km</span><span>1–1.5 hr</span></div>
+          <p>A shorter, steadier climb through dense secondary forest on granite steps, old stone slabs, and earthen ridges. The path is wide and easy to follow, though it can get steep. At the top, a viewing pavilion looks out over the land; on very clear days Taipei 101 is just visible far away, and the sun can be watched sinking toward the Taiwan Strait.</p>
+          </div>
+        </article>
+        <article class="trail entry">
+          <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <div class="entry-body">
+          <h3>Feifeng Mountain to Dabangen</h3>
+          <div class="trail-stats"><span class="hard">Hard</span><span>10.1 km</span><span>4.5–5 hr</span></div>
+          <p>The longest and toughest of the five. The mountain takes its name from the shape of its ridge, said to resemble a phoenix in flight with its neck stretched out. Stone steps near the temples give way to bare soil, exposed roots, and sandstone higher up, all of which can be very slippery. The reward is a stand of old trees with huge, thin, wall-like roots.</p>
+          </div>
+        </article>
+        <article class="trail entry">
+          <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <div class="entry-body">
+          <h3>Guanriping Historic Trail<span class="gloss" lang="zh-Hant">觀日坪古道</span></h3>
+          <div class="trail-stats"><span>Moderate</span><span>7.6 km</span><span>2.5–3 hr</span></div>
+          <p>A ridge walk through older forest on broad stone stairs, dirt ridgelines, and paths laced with roots. Time it for late afternoon: from the ridge you can watch the sunset, then the city lights of Hsinchu and Zhubei come on as the sky turns orange. Taipei 101 can also be seen on exceptionally clear days.</p>
+          </div>
+        </article>
+        <article class="trail entry">
+          <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <div class="entry-body">
+          <h3>Wenlin Ancient Trail<span class="gloss" lang="zh-Hant">文林古道</span></h3>
+          <div class="trail-stats"><span>Moderate</span><span>2.7 km</span><span>0.5–1 hr</span></div>
+          <p>The gentlest outing, and the one that feels most like the countryside: tunnels of bamboo, citrus orchards, dirt paths, and steps made of natural roots, with a temple along the way. Views stretch over the farmland of Zhubei and Qionglin.</p>
+          </div>
+        </article>
+      </div>
+      <p class="section-note">Distances and times are estimates taken from AllTrails and will vary with pace and route.</p>
+
+      <div class="section-head">
+        <h2>Wildlife of the Forest<span class="gloss" lang="zh-Hant">林間動物</span></h2>
+        <p>The woods and orchards around Qionglin are home to a quiet cast of animals. Most are shy or nocturnal, so you are more likely to find signs of them than to see them.</p>
+      </div>
+
+      <div class="entry-list">
+        <div class="entry species">
+          <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <div class="entry-body">
+          <h3>Spinous country rat<span class="gloss" lang="zh-Hant">台灣刺鼠</span></h3>
+          <span class="latin">Niviventer coxingi</span>
+          <p>A forest rodent with stiff, spiny fur on its back and a pale belly. It feeds on seeds and fruit, and in doing so helps spread trees through the forest.</p>
+          </div>
+        </div>
+        <div class="entry species">
+          <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <div class="entry-body">
+          <h3>Common emerald dove<span class="gloss" lang="zh-Hant">翠翼鳩</span></h3>
+          <span class="latin">Chalcophaps indica</span>
+          <p>A shy forest dove with shimmering emerald-green wings, usually seen walking quietly along the shaded ground or flushing low through the trees.</p>
+          </div>
+        </div>
+        <div class="entry species">
+          <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <div class="entry-body">
+          <h3>Small Indian civet<span class="gloss" lang="zh-Hant">麝香貓</span></h3>
+          <span class="latin">Viverricula indica</span>
+          <p>A slender, spotted night-time hunter with a ringed tail. Elusive and rarely seen, it is one of the forest's more secretive residents.</p>
+          </div>
+        </div>
+        <div class="entry species">
+          <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <div class="entry-body">
+          <h3>Insular mole<span class="gloss" lang="zh-Hant">台灣鼴鼠</span></h3>
+          <span class="latin">Mogera insularis</span>
+          <p>A burrowing mammal that spends nearly its whole life underground. Fresh mounds of loose earth beside a path or orchard are usually the only sign it is there.</p>
+          </div>
+        </div>
+        <div class="entry species">
+          <!-- IMAGE PLACEHOLDER — delete this div and put your own <img src="..." alt="..."> tag here -->
+          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <div class="entry-body">
+          <h3>Malayan night heron<span class="gloss" lang="zh-Hant">黑冠麻鷺</span></h3>
+          <span class="latin">Gorsachius melanolophus</span>
+          <p>A stocky heron with a black crest that stalks slowly across woodland floors and grassy ground, freezing in place when it senses you.</p>
+          </div>
+        </div>
       </div>
       </div>
     </div>
