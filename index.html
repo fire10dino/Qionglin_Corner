@@ -415,6 +415,7 @@
   .feature p{ margin:0; color:var(--ink-soft); }
 
   /* ---------- sections inside article box (trails, wildlife) ---------- */
+  .article-box > .section-head:first-child{ margin-top:0; padding-top:0; border-top:0; }
   .section-head{ margin:3.2rem 0 1.2rem; padding-top:2.2rem; border-top:1px solid var(--line-strong); }
   .section-head h2{ font-size:1.9rem; display:flex; align-items:baseline; gap:.7rem; margin-bottom:.6rem; }
   .section-head h2 .gloss{ font-size:1rem; }
@@ -433,6 +434,8 @@
   }
   .trail-stats span.hard{ color:var(--brick); border-color:var(--brick); }
   .trail p{ margin:0; color:var(--ink-soft); }
+  .section-photo{ margin:0 0 1.6rem; }
+  .section-photo img{ width:100%; aspect-ratio:16/9; object-fit:cover; display:block; border:1px solid var(--line-strong); background:var(--paper); }
   .section-note{ margin:1.2rem 0 0; font-size:.88rem; color:var(--ink-soft); }
   /* ---------- entries: photo on one side, text on the other, alternating ---------- */
   .entry{
@@ -493,7 +496,7 @@
   <ul>
     <li><button data-target="cover">Main Page<span class="gloss" lang="zh-Hant">首頁</span></button></li>
     <li><button data-target="history">History<span class="gloss" lang="zh-Hant">歷史源流</span></button></li>
-    <li><button data-target="heritage">Secondary Forest<span class="gloss" lang="zh-Hant">老街古蹟</span></button></li>
+    <li><button data-target="heritage">Secondary Forest<span class="gloss" lang="zh-Hant">次生林</span></button></li>
     <li><button data-target="videos">Videos<span class="gloss" lang="zh-Hant">影片</span></button></li>
     <li><button data-target="credits">Sources &amp; Credits<span class="gloss" lang="zh-Hant">資料來源</span></button></li>
   </ul>
@@ -530,7 +533,7 @@
           </button>
           <button class="stamp" data-target="heritage">
             <span class="stamp__primary">Secondary Forest</span>
-            <span class="stamp__secondary gloss" lang="zh-Hant">老街古蹟</span>
+            <span class="stamp__secondary gloss" lang="zh-Hant">次生林</span>
           </button>
           <button class="stamp" data-target="videos">
             <span class="stamp__primary">Videos</span>
@@ -616,7 +619,7 @@
           <div class="tl-year">1843<span class="gloss">道光23年</span></div>
           <div class="tl-body">
             <h3>A market street forms<span class="gloss" lang="zh-Hant">九芎林街</span></h3>
-            <p>The Jiuqionglin market street was established — a sign the settlement had grown into an organized trading centre, and likely the root of today's old street.</p>
+            <p>The Jiuqionglin market street was established — a sign the settlement had grown into an organized local trading centre.</p>
           </div>
         </div>
       </div>
@@ -800,91 +803,33 @@
     </div>
   </section>
 
-  <!-- ============ SECONDARY FOREST (old street / heritage) ============ -->
+  <!-- ============ SECONDARY FOREST (trails and wildlife) ============ -->
   <section id="heritage" class="page">
     <div class="page-hero">
-      <svg class="page-hero__icon" viewBox="0 0 120 90" aria-hidden="true" fill="none" stroke="var(--brick)" stroke-width="3">
-        <path d="M15,55 Q15,30 30,28 Q35,15 45,28 Q60,10 75,28 Q85,15 90,28 Q105,30 105,55" stroke-linecap="round" stroke-linejoin="round"/>
-        <line x1="60" y1="28" x2="60" y2="55"/>
-        <line x1="10" y1="70" x2="110" y2="70"/>
+      <svg class="page-hero__icon" viewBox="0 0 120 90" aria-hidden="true" fill="none" stroke="var(--moss)" stroke-width="3">
+        <path d="M35,60 L35,76 M35,60 L20,60 L35,30 L50,60 Z" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M80,66 L80,80 M80,66 L62,66 L80,22 L98,66 Z" stroke-linejoin="round" stroke-linecap="round"/>
+        <line x1="10" y1="80" x2="110" y2="80"/>
       </svg>
-      <h1>Secondary Forest<span class="gloss" lang="zh-Hant">老街古蹟</span></h1>
-      <p class="page-hero__intro">The old street beside Guangfu Temple is where Qionglin's history is easiest to picture. Its timber and brick shophouses are still standing, and a handful of the trades that once served the whole district haven't quite left.</p>
+      <h1>Secondary Forest<span class="gloss" lang="zh-Hant">次生林</span></h1>
+      <p class="page-hero__intro">The hills around Qionglin are covered in secondary forest — woodland that grew back after the settlers' fields. Walk its trails, and look out for the shy animals that live there.</p>
     </div>
     <div class="article-wrap">
       <div class="article-box">
-      <div class="prose-block">
-        <p>Walk it slowly, and a blacksmith's forge, a tofu press, and a rice shop still open their doors along the lane. Follow it far enough, and the whole township's pace seems to slow down with you.</p>
-      </div>
-
-      <div class="text-image text-image--right">
-        <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-        <img src="images.jpg" alt="describe the photo here">
-        <p>Timber and brick shophouses along the old street beside Guangfu Temple — a few of the trades here have never really closed.</p>
-      </div>
-
-      <div class="gallery">
-        <div class="gallery-card">
-          <svg class="gallery-card__icon brick" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5">
-            <rect x="8" y="26" width="14" height="30"/><rect x="25" y="26" width="14" height="30"/><rect x="42" y="26" width="14" height="30"/>
-            <path d="M6,26 L15,14 L24,26 Z"/><path d="M23,26 L32,14 L41,26 Z"/><path d="M40,26 L49,14 L58,26 Z"/>
-          </svg>
-          <h3>Old Street<span class="gloss" lang="zh-Hant">老街</span></h3>
-          <p>Two-storey timber and brick shophouses, and a few old trades that never quite closed, line this quiet lane.</p>
-        </div>
-        <div class="gallery-card">
-          <svg class="gallery-card__icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M8,44 Q8,20 20,18 Q24,8 32,18 Q44,4 52,18 Q58,20 56,44" stroke-linejoin="round"/>
-            <line x1="32" y1="18" x2="32" y2="44"/><line x1="6" y1="52" x2="58" y2="52"/>
-          </svg>
-          <h3>Guangfu Temple<span class="gloss" lang="zh-Hant">廣福宮</span></h3>
-          <p>Built in 1800 and dedicated to the Three Mountain Kings, it remains the busiest temple in the township, drawing worshippers from seven villages.</p>
-        </div>
-        <div class="gallery-card">
-          <svg class="gallery-card__icon gold" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M10,44 Q10,22 22,20 Q26,10 32,20 Q44,6 54,20 Q58,22 54,44" stroke-linejoin="round"/>
-            <rect x="24" y="46" width="16" height="10" rx="1"/>
-            <line x1="24" y1="51" x2="40" y2="51"/>
-          </svg>
-          <h3>Wenlin Pavilion<span class="gloss" lang="zh-Hant">文林閣</span></h3>
-          <p>Founded in 1876 as a temple to the god of literature, it still funds local schools and welcomes students before exam season.</p>
-        </div>
-        <div class="gallery-card">
-          <svg class="gallery-card__icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M6,40 Q32,16 58,40" stroke-linecap="round"/>
-            <line x1="6" y1="40" x2="6" y2="50"/><line x1="58" y1="40" x2="58" y2="50"/>
-            <line x1="14" y1="40" x2="14" y2="48"/><line x1="24" y1="40" x2="24" y2="48"/>
-            <line x1="34" y1="40" x2="34" y2="48"/><line x1="44" y1="40" x2="44" y2="48"/>
-            <line x1="6" y1="50" x2="58" y2="50"/>
-          </svg>
-          <h3>Chenggan Bridge<span class="gloss" lang="zh-Hant">呈甘橋</span></h3>
-          <p>A wooden footbridge from 1818, rebuilt in stone in 1923. Its deck often doubles as a drying rack for pickled mustard greens.</p>
-        </div>
-        <div class="gallery-card">
-          <svg class="gallery-card__icon moss" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M4,46 L18,26 L28,38 L38,18 L50,34 L60,46 Z" stroke-linejoin="round"/>
-            <path d="M4,52 Q32,44 60,52" stroke-linecap="round"/>
-          </svg>
-          <h3>Feifeng Mountain &amp; the Youluo River<span class="gloss" lang="zh-Hant">飛鳳山．油羅溪</span></h3>
-          <p>The ridgeline gives the township its best-known view; the riverbed below is scattered with dark basalt and smooth, rounded stones.</p>
-        </div>
-      </div>
-
-      <div class="text-image text-image--left">
-        <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-        <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
-        <p>Feifeng Mountain's ridgeline, seen from the old street — still the township's best-known view.</p>
-      </div>
-
       <div class="section-head">
         <h2>The Forest Trails<span class="gloss" lang="zh-Hant">步道</span></h2>
         <p>Much of the woodland around Qionglin is secondary forest — trees that grew back after the original cover was cleared, which suits a township whose first settlers cleared this valley for farmland. Five trails, most of them around Feifeng Mountain, take you in.</p>
       </div>
 
+      <figure class="section-photo">
+        <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
+        <img src="trails.jpg" alt="The forest trails around Feifeng Mountain">
+      </figure>
+
       <div class="trail-list">
         <article class="trail entry">
           <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <img src="images.jpg" alt="Feifeng Mountain Loop">
           <div class="entry-body">
           <h3>Feifeng Mountain Loop<span class="gloss" lang="zh-Hant">飛鳳山</span></h3>
           <div class="trail-stats"><span>Moderate</span><span>5.8 km</span><span>2–2.5 hr</span></div>
@@ -893,7 +838,7 @@
         </article>
         <article class="trail entry">
           <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <img src="image1.jpg" alt="Feifeng Mountain">
           <div class="entry-body">
           <h3>Feifeng Mountain</h3>
           <div class="trail-stats"><span>Moderate</span><span>3.4 km</span><span>1–1.5 hr</span></div>
@@ -902,7 +847,7 @@
         </article>
         <article class="trail entry">
           <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <img src="image2.jpg" alt="Feifeng Mountain to Dabangen">
           <div class="entry-body">
           <h3>Feifeng Mountain to Dabangen</h3>
           <div class="trail-stats"><span class="hard">Hard</span><span>10.1 km</span><span>4.5–5 hr</span></div>
@@ -911,7 +856,7 @@
         </article>
         <article class="trail entry">
           <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <img src="image3.jpg" alt="Guanriping Historic Trail">
           <div class="entry-body">
           <h3>Guanriping Historic Trail<span class="gloss" lang="zh-Hant">觀日坪古道</span></h3>
           <div class="trail-stats"><span>Moderate</span><span>7.6 km</span><span>2.5–3 hr</span></div>
@@ -920,7 +865,7 @@
         </article>
         <article class="trail entry">
           <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <img src="image4.jpg" alt="Wenlin Ancient Trail">
           <div class="entry-body">
           <h3>Wenlin Ancient Trail<span class="gloss" lang="zh-Hant">文林古道</span></h3>
           <div class="trail-stats"><span>Moderate</span><span>2.7 km</span><span>0.5–1 hr</span></div>
@@ -938,7 +883,7 @@
       <div class="entry-list">
         <div class="entry species">
           <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <img src="image5.jpg" alt="Spinous country rat">
           <div class="entry-body">
           <h3>Spinous country rat<span class="gloss" lang="zh-Hant">台灣刺鼠</span></h3>
           <span class="latin">Niviventer coxingi</span>
@@ -947,7 +892,7 @@
         </div>
         <div class="entry species">
           <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <img src="image6.jpg" alt="Common emerald dove">
           <div class="entry-body">
           <h3>Common emerald dove<span class="gloss" lang="zh-Hant">翠翼鳩</span></h3>
           <span class="latin">Chalcophaps indica</span>
@@ -956,7 +901,7 @@
         </div>
         <div class="entry species">
           <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <img src="image7.jpg" alt="Small Indian civet">
           <div class="entry-body">
           <h3>Small Indian civet<span class="gloss" lang="zh-Hant">麝香貓</span></h3>
           <span class="latin">Viverricula indica</span>
@@ -965,7 +910,7 @@
         </div>
         <div class="entry species">
           <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <img src="image8.jpg" alt="Insular mole">
           <div class="entry-body">
           <h3>Insular mole<span class="gloss" lang="zh-Hant">台灣鼴鼠</span></h3>
           <span class="latin">Mogera insularis</span>
@@ -974,7 +919,7 @@
         </div>
         <div class="entry species">
           <!-- ▼▼ IMAGE LINK GOES HERE ▼▼  Replace the image-slot div below with:  <img src="PASTE IMAGE LINK HERE" alt="short description of the photo"> -->
-          <div class="image-slot">Image<span class="gloss" lang="zh-Hant">圖片</span></div>
+          <img src="image9.jpg" alt="Malayan night heron">
           <div class="entry-body">
           <h3>Malayan night heron<span class="gloss" lang="zh-Hant">黑冠麻鷺</span></h3>
           <span class="latin">Gorsachius melanolophus</span>
